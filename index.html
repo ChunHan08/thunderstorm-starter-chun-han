@@ -91,7 +91,75 @@ function getRandomThunder() {
     return getRandomThunderKey();
   else {
     lastKey = key;
-    return key;7
+    return key;
   }
 }
+var rainStarter = false;
+var sky = document.getElementById("#sky");
+var body = document.getElementById("body");
+var ground = document.getElementById("#ground");
+var message = document.getElementById("#message");
+var flashInterval = 20;
+var flashVariance = 500;
+var flashProbabaility = 0.98;
+var rainStartDelay = 3000;
+var thunderStartDelay = 2000;
+var thunderDelay = 1000;
+var thunderDelayVariance = 3000;
+var skyColor = sky.style.background;
+function flashOn() {
+  sky.style.background = "#FFF";
+  requestAnimationFrame(flashOff);
+}
+function flashOff() {
+  sky.style.background = skyColor;
+  function flash(probability, total = 0) {
+    requestAnimationFrame(flashOn);
+    total++;
+    if (Math.random() < probability) {
+      var delay = flashInterval+flashVariance*Math.pow(Math.random(), 2);
+      setTimeout((probability*probability, total);
+    }, delay);
+  }
+  else {
+    colsole.log("Flashed a total of "+total+" times")
+  }
+}
+function rain() {
+  console.log("Starting rain");
+  dummy.play();
+  massage.style.opacity = 0;
+  rainStarted = true;
+  setTimeout(() => rain.play(), rainStartDelay);
+  setTimeout(() => startThunder.play(), thunderStartDelay);
+}
+function playThunder() {
+  var key = getRandomThunder();
+  var delay = thunderDelay+thunderDelayVariance*Math.random();
+  setTimeout(() => thunder.play(key), delay);
+}
+function click() {
+  console.log("Lightning strikes");
+  if (!rainStarted) startRain();
+  else playThunder();
+  flash(flashProbabaility);
+}
+function onAllLoaded() {
+  message.innerHTML = "turn sound on + click";
+  body.addEventListner("click", click);
+  body.addEventListner("touchstart", click);
+}
+function checkIfAllLoaded() {
+  console.log("Checking if all assets are loaded");
+  var loaded = true;
+  loaded = loaded && rain.state() == "loaded";
+  loaded = loaded && thunder.state() == "loaded";
+  loaded = loaded && startThunder.state() == "loaded";
+  if (loaded) onAllLoaded();
+}
+rain.once("load", checkIfAllLoaded);
+thunder.once("load", checkIfAllLoaded);
+startThunder.once("load", checkIfAllLoaded);
+checkIfAllLoaded();
+  </script>
   
